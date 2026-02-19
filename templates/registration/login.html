@@ -1,88 +1,155 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login | Placement Portal</title>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login | Placement Preparation Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(120deg, #2980b9, #8e44ad);
-            height: 100vh;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(120deg, #2980b9 0%, #8e44ad 100%);
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
         }
-
+        .login-glow {
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, #8e44ad 0%, #2980b9 80%, transparent 100%);
+            filter: blur(70px);
+            z-index: 0;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.7;
+            pointer-events: none;
+        }
         .login-box {
-            background: white;
+            position: relative;
+            z-index: 1;
+            background: rgba(255,255,255,0.98);
             width: 350px;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0px 10px 25px rgba(0,0,0,0.2);
+            padding: 44px 36px 32px 36px;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(52, 28, 79, 0.18);
             text-align: center;
+            animation: floatIn 0.8s cubic-bezier(.68,-0.55,.27,1.55);
         }
-
+        @keyframes floatIn {
+            0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
         .login-box h2 {
-            margin-bottom: 20px;
-            color: #333;
+            margin-bottom: 24px;
+            color: #8e44ad;
+            letter-spacing: 1px;
+            font-weight: 700;
         }
-
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
         .login-box form p {
+            margin: 0 0 8px 0;
             text-align: left;
         }
-
-        .login-box input {
+        .login-box input[type="text"],
+        .login-box input[type="password"] {
             width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+            padding: 12px 14px;
+            border: 1.5px solid #e0e6ed;
+            border-radius: 8px;
+            font-size: 15px;
+            background: #f7fafd;
+            transition: border 0.2s, box-shadow 0.2s;
         }
-
-        .login-box button {
+        .login-box input[type="text"]:focus,
+        .login-box input[type="password"]:focus {
+            border: 1.5px solid #8e44ad;
+            outline: none;
+            box-shadow: 0 0 0 2px #8e44ad55;
+        }
+        .login-box button[type="submit"] {
             width: 100%;
-            padding: 10px;
-            background: #2980b9;
+            padding: 12px 0;
+            margin-top: 10px;
+            background: linear-gradient(90deg, #8e44ad 0%, #2980b9 100%);
+            color: #fff;
             border: none;
-            color: white;
+            border-radius: 8px;
             font-size: 16px;
-            border-radius: 5px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
             cursor: pointer;
+            box-shadow: 0 2px 8px rgba(52, 28, 79, 0.10);
+            transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
         }
-
-        .login-box button:hover {
-            background: #1f6391;
+        .login-box button[type="submit"]:hover {
+            background: linear-gradient(90deg, #2980b9 0%, #8e44ad 100%);
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 6px 18px rgba(52, 28, 79, 0.18);
         }
-
         .login-box a {
             display: block;
-            margin-top: 15px;
-            color: #2980b9;
+            margin-top: 18px;
+            color: #8e44ad;
             text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
         }
-
         .login-box a:hover {
             text-decoration: underline;
+            color: #2980b9;
+        }
+        @media (max-width: 480px) {
+            .login-box {
+                width: 95vw;
+                padding: 24px 8vw 18px 8vw;
+            }
+            .login-glow {
+                width: 90vw;
+                height: 90vw;
+            }
         }
     </style>
 </head>
 
 <body>
-
-<div class="login-box">
-    <h2>Placement Portal</h2>
-
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
-
-    <a href="{% url 'register' %}">New user? Register here</a>
-</div>
-
+    <div class="login-glow"></div>
+    <div class="login-box">
+        <h2>Placement Preparation Portal</h2>
+        <form method="post" autocomplete="off">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Login</button>
+        </form>
+        <a href="{% url 'register' %}">New user? Register here</a>
+    </div>
+    <script>
+        // Interactive shake on failed login (if error message is present)
+        window.addEventListener('DOMContentLoaded', function() {
+            var box = document.querySelector('.login-box');
+            var error = document.querySelector('.errorlist');
+            if (error && box) {
+                box.animate([
+                    { transform: 'translateX(0)' },
+                    { transform: 'translateX(-10px)' },
+                    { transform: 'translateX(10px)' },
+                    { transform: 'translateX(-8px)' },
+                    { transform: 'translateX(8px)' },
+                    { transform: 'translateX(0)' }
+                ], {
+                    duration: 400,
+                    easing: 'ease-in-out'
+                });
+            }
+        });
+    </script>
 </body>
 </html>

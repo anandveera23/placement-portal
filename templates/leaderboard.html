@@ -7,67 +7,94 @@
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(120deg, #1e3c72, #2a5298);
+            background: radial-gradient(circle at top right, #1a1f35, #0d1117 60%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            color: white;
         }
 
         .container {
-            background: white;
-            width: 90%;
-            max-width: 900px;
-            padding: 35px;
-            border-radius: 18px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(20px);
+    width: 90%;
+    max-width: 950px;
+    padding: 40px;
+    border-radius: 22px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+}
 
-        h2 {
-            text-align: center;
-            color: #1e3c72;
-            margin-bottom: 25px;
-        }
+
+       h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 26px;
+    color: #4f8cff;
+    letter-spacing: 1px;
+}
+
 
         table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+    width: 100%;
+    border-collapse: collapse;
+    color: white;
+}
 
-        th, td {
-            padding: 14px;
-            text-align: center;
-        }
+th, td {
+    padding: 16px;
+    text-align: center;
+}
 
-        th {
-            background: #2a5298;
-            color: white;
-        }
+th {
+    background: rgba(79,140,255,0.2);
+    color: #4f8cff;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
 
-        tr:nth-child(even) {
-            background: #f2f5ff;
-        }
+tr {
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
 
-        tr:hover {
-            background: #e8ecff;
-        }
+tr:nth-child(even) {
+    background: rgba(255,255,255,0.03);
+}
+
+tr:hover {
+    background: rgba(79,140,255,0.15);
+    transition: 0.3s;
+}
+
 
         .rank {
-            font-weight: bold;
-            color: #1e3c72;
-        }
+    font-weight: bold;
+    color: #4f8cff;
+    font-size: 16px;
+}
+tr:nth-child(2) .rank { color: gold; }
+tr:nth-child(3) .rank { color: silver; }
+tr:nth-child(4) .rank { color: #cd7f32; }
 
         .btn {
-            display: inline-block;
-            margin-top: 25px;
-            padding: 12px 26px;
-            background: linear-gradient(120deg, #1e3c72, #2a5298);
-            color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: 600;
-        }
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 30px;
+    background: linear-gradient(135deg, #4f8cff, #6c63ff);
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 15px rgba(79,140,255,0.7);
+}
+
 
         .center {
             text-align: center;
@@ -107,9 +134,11 @@
 
     <div class="center">
         <a href="{% url 'dashboard' %}" class="btn">⬅ Back to Dashboard</a>
+        
     </div>
 
 </div>
 
 </body>
+
 </html>

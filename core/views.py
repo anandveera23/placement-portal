@@ -7,6 +7,7 @@ from .models import CodingQuestion
 from .models import MCQResult
 import sys
 import io
+import time
 
 
 def register(request):
@@ -24,35 +25,92 @@ def register(request):
 def dashboard(request):
     return render(request, 'dashboard.html')
 
-
 @login_required
 def mcq_test(request):
-    questions = Question.objects.all()
+    questions = list(Question.objects.all())
 
-    if request.method == "POST":
-        score = 0
-        for q in questions:
-            selected = request.POST.get(str(q.id))
-            if selected == q.correct_answer:
-                score += 1
+    if not questions:
+        return render(request, "mcq_result.html", {
+            "score": 0,
+            "total": 0
+        })
 
-        # ✅ SAVE MCQ PERFORMANCE
+    # Initialize session only once
+    if "mcq_index" not in request.session:
+        request.session["mcq_index"] = 0
+        request.session["mcq_score"] = 0
+        request.session["start_time"] = time.time()
+
+    mcq_index = request.session["mcq_index"]
+    start_time = request.session.get("start_time")
+
+    # Calculate remaining time
+    exam_duration = 30 * 60
+    elapsed_time = time.time() - start_time
+    remaining_time = int(exam_duration - elapsed_time)
+
+    # Time finished
+    if remaining_time <= 0:
+        score = request.session["mcq_score"]
+        total = len(questions)
+
         MCQResult.objects.create(
             user=request.user,
             score=score,
-            total=questions.count()
+            total=total
         )
 
-        return render(
-            request,
-            'mcq_result.html',
-            {
-                'score': score,
-                'total': questions.count()
-            }
+        request.session.pop("mcq_index", None)
+        request.session.pop("mcq_score", None)
+        request.session.pop("start_time", None)
+
+
+        return render(request, "mcq_result.html", {
+            "score": score,
+            "total": total
+        })
+
+    # Finished all questions
+    if mcq_index >= len(questions):
+        score = request.session["mcq_score"]
+        total = len(questions)
+
+        MCQResult.objects.create(
+            user=request.user,
+            score=score,
+            total=total
         )
 
-    return render(request, 'mcq_test.html', {'questions': questions})
+        request.session.pop("mcq_index", None)
+        request.session.pop("mcq_score", None)
+        request.session.pop("start_time", None)
+
+
+        return render(request, "mcq_result.html", {
+            "score": score,
+            "total": total
+        })
+
+    question = questions[mcq_index]
+
+    if request.method == "POST":
+        selected = request.POST.get("answer")
+
+        if selected == question.correct_answer:
+            request.session["mcq_score"] += 1
+
+        request.session["mcq_index"] += 1
+        request.session.modified = True  # IMPORTANT
+
+        return redirect("mcq_test")
+
+    return render(request, "mcq_test.html", {
+        "question": question,
+        "current": mcq_index + 1,
+        "total": len(questions),
+        "remaining_time": remaining_time
+    })
+
 
 
 @login_required
@@ -176,3 +234,13 @@ def leaderboard(request):
         'leaderboard.html',
         {'leaderboard': leaderboard_data}
     )
+@login_required
+def all_results(request):
+    if not request.user.is_superuser:
+        return redirect("dashboard")
+
+    results = MCQResult.objects.all().order_by('-date_taken')
+
+    return render(request, "all_results.html", {
+        "results": results
+    })

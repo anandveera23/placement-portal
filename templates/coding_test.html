@@ -2,198 +2,186 @@
 <html>
 <head>
     <title>Coding Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
-        body {
-            margin: 0;
-            background: linear-gradient(120deg, #0f172a 60%, #1e293b 100%);
-            color: #e5e7eb;
-            font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
-            min-height: 100vh;
-        }
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        .top {
-            background: linear-gradient(90deg, #1e3c72 60%, #2a5298 100%);
-            padding: 18px 36px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 12px 0 #0002;
-            border-bottom-left-radius: 18px;
-            border-bottom-right-radius: 18px;
-        }
-        .top h3 {
-            margin: 0;
-            font-size: 1.6rem;
-            letter-spacing: 1px;
-            font-weight: 600;
-        }
-        .top strong {
-            background: #334155;
-            padding: 7px 18px;
-            border-radius: 16px;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-        }
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top right, #1a1f35, #0d1117 60%);
+    min-height: 100vh;
+    color: #ffffff;
+}
 
-        .layout {
-            display: grid;
-            grid-template-columns: 1fr 1.4fr;
-            gap: 0px;
-            height: calc(100vh - 70px);
-            box-shadow: 0 8px 32px 0 #0003;
-            border-radius: 18px;
-            margin: 30px auto 0 auto;
-            max-width: 1200px;
-            background: rgba(2,6,23,0.98);
-            overflow: hidden;
-        }
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 45px;
+    background: rgba(20, 25, 40, 0.85);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
 
-        .left {
-            padding: 36px 32px 32px 36px;
-            background: linear-gradient(120deg, #1e293b 80%, #334155 100%);
-            border-right: 1.5px solid #334155;
-            box-shadow: 2px 0 12px 0 #0001;
-        }
-        .right {
-            padding: 36px 36px 32px 32px;
-            background: #020617;
-        }
+.header h2 {
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #4f8cff;
+}
 
-        .left h4 {
-            margin-top: 0;
-            color: #38bdf8;
-            font-size: 1.15rem;
-            margin-bottom: 6px;
-        }
-        .left p {
-            margin-top: 0;
-            margin-bottom: 18px;
-            color: #efe0ee;
-            font-size: 1.05rem;
-        }
+.badge {
+    background: linear-gradient(135deg, #4f8cff, #6c63ff);
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 14px;
+    box-shadow: 0 0 12px rgba(79,140,255,0.6);
+}
 
-        textarea {
-            width: 100%;
-            height: 220px;
-            background: #0f172a;
-            color: #e5e7eb;
-            border: 1.5px solid #334155;
-            border-radius: 10px;
-            font-family: 'Fira Mono', 'Consolas', monospace;
-            font-size: 16px;
-            padding: 14px;
-            outline: none;
-            transition: border 0.2s;
-            box-shadow: 0 2px 8px 0 #0002;
-            resize: vertical;
-        }
-        textarea:focus {
-            border: 1.5px solid #38bdf8;
-            background: #1e293b;
-        }
+/* MAIN LAYOUT */
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 30px;
+    padding: 40px 50px;
+}
 
-        .btn {
-            padding: 12px 32px;
-            margin-top: 18px;
-            margin-right: 10px;
-            border: none;
-            border-radius: 22px;
-            font-weight: bold;
-            font-size: 1.08rem;
-            cursor: pointer;
-            box-shadow: 0 2px 8px 0 #0002;
-            transition: background 0.2s, transform 0.1s;
-        }
-        .btn:active {
-            transform: scale(0.97);
-        }
-        .run {
-            background: linear-gradient(90deg, #22c55e 70%, #16a34a 100%);
-            color: #0f172a;
-        }
-        .run:hover {
-            background: linear-gradient(90deg, #16a34a 70%, #22c55e 100%);
-        }
-        .submit {
-            background: linear-gradient(90deg, #3b82f6 70%, #2563eb 100%);
-            color: #fff;
-        }
-        .submit:hover {
-            background: linear-gradient(90deg, #2563eb 70%, #3b82f6 100%);
-        }
+/* CARD */
+.card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(20px);
+    border-radius: 22px;
+    padding: 30px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    transition: 0.4s ease;
+}
 
-        .output-box {
-            margin-top: 22px;
-            background: #18181b;
-            padding: 18px 16px 12px 16px;
-            border-radius: 12px;
-            min-height: 90px;
-            box-shadow: 0 2px 12px 0 #0002;
-            font-size: 1.05rem;
-            border: 1.5px solid #334155;
-            transition: border 0.2s;
-        }
-        .output-box:focus-within {
-            border: 1.5px solid #38bdf8;
-        }
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 25px 50px rgba(79,140,255,0.3);
+}
 
-        .pass {
-            color: #22c55e;
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 6px;
-            letter-spacing: 1px;
-            animation: pop 0.4s;
-        }
-        .fail {
-            color: #ef4444;
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 6px;
-            letter-spacing: 1px;
-            animation: shake 0.4s;
-        }
+h4 {
+    color: #4f8cff;
+    margin-bottom: 10px;
+}
 
-        @keyframes pop {
-            0% { transform: scale(0.7); opacity: 0.2; }
-            80% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); }
-        }
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            20% { transform: translateX(-6px); }
-            40% { transform: translateX(6px); }
-            60% { transform: translateX(-4px); }
-            80% { transform: translateX(4px); }
-            100% { transform: translateX(0); }
-        }
+p {
+    margin-bottom: 20px;
+    line-height: 1.6;
+    color: #b0b8d1;
+}
 
-        @media (max-width: 900px) {
-            .layout {
-                grid-template-columns: 1fr;
-                max-width: 98vw;
-                margin: 18px auto 0 auto;
-                border-radius: 12px;
-            }
-            .left, .right {
-                padding: 22px 10px 18px 10px;
-            }
-        }
+/* TEXTAREA */
+textarea {
+    width: 100%;
+    height: 270px;
+    background: #0f172a;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 15px;
+    padding: 18px;
+    color: #f8fafc;
+    font-family: 'Fira Code', monospace;
+    font-size: 15px;
+    resize: none;
+    transition: 0.3s ease;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #4f8cff;
+    box-shadow: 0 0 18px rgba(79,140,255,0.6);
+}
+
+/* BUTTONS */
+.buttons {
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 12px 30px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: 0.3s ease;
+    margin-right: 12px;
+}
+
+/* RUN BUTTON */
+.run {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+}
+
+.run:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 18px rgba(34,197,94,0.6);
+}
+
+/* SUBMIT BUTTON */
+.submit {
+    background: linear-gradient(135deg, #4f8cff, #6c63ff);
+    color: white;
+}
+
+.submit:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 18px rgba(79,140,255,0.7);
+}
+
+/* OUTPUT */
+.output {
+    margin-top: 25px;
+    background: rgba(255,255,255,0.04);
+    padding: 18px;
+    border-radius: 15px;
+    min-height: 90px;
+    border: 1px solid rgba(255,255,255,0.08);
+    font-family: monospace;
+}
+
+/* RESULT TEXT */
+.pass {
+    color: #22c55e;
+    font-weight: bold;
+}
+
+.fail {
+    color: #ef4444;
+    font-weight: bold;
+}
+
+/* RESPONSIVE */
+@media(max-width: 900px) {
+    .container {
+        grid-template-columns: 1fr;
+        padding: 25px;
+    }
+}
+
     </style>
 </head>
 
 <body>
 
-<div class="top">
-    <h3>💻 Coding Test</h3>
-    <strong>Question {{ current }} / {{ total }}</strong>
+<div class="header">
+    <h2>💻 Coding Assessment</h2>
+    <div class="badge">Question {{ current }} / {{ total }}</div>
 </div>
 
-<div class="layout">
+<div class="container">
 
-    <!-- LEFT -->
-    <div class="left">
+    <!-- LEFT PANEL -->
+    <div class="card">
         <h4>📘 Problem</h4>
         <p>{{ question.problem_statement }}</p>
 
@@ -204,28 +192,29 @@
         <p>{{ question.output_format }}</p>
     </div>
 
-    <!-- RIGHT -->
-    <div class="right">
+    <!-- RIGHT PANEL -->
+    <div class="card">
 
-        <textarea id="code" placeholder="# Write your Python code here..."></textarea>
+        <textarea id="code" placeholder="# Write your Python solution here..."></textarea>
 
-        <button class="btn run" onclick="runCode()">▶ Run Code</button>
+        <div class="buttons">
+            <button class="btn run" onclick="runCode()">▶ Run</button>
 
-        <form method="post">
-            {% csrf_token %}
-            <input type="hidden" name="is_correct" id="is_correct" value="false">
-            <button class="btn submit" type="submit">Submit & Next ▶</button>
-        </form>
+            <form method="post" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="is_correct" id="is_correct" value="false">
+                <button class="btn submit" type="submit">Submit & Next ▶</button>
+            </form>
+        </div>
 
-        <div class="output-box">
+        <div class="output">
             <div id="status"></div>
-            <pre id="output">Run code to see output...</pre>
+            <pre id="output">Output will appear here...</pre>
         </div>
 
     </div>
 
 </div>
-
 <script>
 function runCode() {
     document.getElementById("status").innerHTML = "";

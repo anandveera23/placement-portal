@@ -1,44 +1,149 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            height:100vh;
-            background:#1e3c72;
-            font-family:Segoe UI;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+        .login-glow {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #2a5298 0%, #1e3c72 80%, transparent 100%);
+            filter: blur(60px);
+            z-index: 0;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.7;
+            pointer-events: none;
         }
         .box {
-            background:white;
-            padding:40px;
-            border-radius:15px;
-            width:350px;
+            position: relative;
+            z-index: 1;
+            background: rgba(255,255,255,0.97);
+            padding: 44px 36px 32px 36px;
+            border-radius: 18px;
+            width: 350px;
+            box-shadow: 0 8px 32px rgba(30,60,114,0.18);
+            animation: floatIn 0.8s cubic-bezier(.68,-0.55,.27,1.55);
         }
-        input, button {
-            width:100%;
-            padding:10px;
-            margin-top:10px;
+        @keyframes floatIn {
+            0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
         }
-        button {
-            background:#2a5298;
-            color:white;
-            border:none;
+        .box h2 {
+            text-align: center;
+            color: #1e3c72;
+            margin-bottom: 28px;
+            letter-spacing: 1px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #e0e6ed;
+            border-radius: 8px;
+            font-size: 15px;
+            background: #f7fafd;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+        input[type="text"]:focus, input[type="password"]:focus {
+            border: 1.5px solid #2a5298;
+            outline: none;
+            box-shadow: 0 0 0 2px #2a529855;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px 0;
+            margin-top: 10px;
+            background: linear-gradient(90deg, #1e3c72 0%, #2a5298 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(30,60,114,0.10);
+            transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+        }
+        button[type="submit"]:hover {
+            background: linear-gradient(90deg, #2a5298 0%, #1e3c72 100%);
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 6px 18px rgba(30,60,114,0.18);
+        }
+        .animated-underline input[type="text"],
+        .animated-underline input[type="password"] {
+            border: none;
+            border-bottom: 2px solid #e0e6ed;
+            border-radius: 0;
+            background: transparent;
+            transition: border-color 0.2s;
+        }
+        .animated-underline input[type="text"]:focus,
+        .animated-underline input[type="password"]:focus {
+            border-bottom: 2px solid #2a5298;
+            box-shadow: none;
+        }
+        .box form p {
+            margin: 0 0 8px 0;
+        }
+        @media (max-width: 480px) {
+            .box {
+                width: 95vw;
+                padding: 24px 8vw 18px 8vw;
+            }
+            .login-glow {
+                width: 90vw;
+                height: 90vw;
+            }
         }
     </style>
 </head>
 <body>
-
-<div class="box">
-    <h2>Login</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
-</div>
-
+    <div class="login-glow"></div>
+    <div class="box animated-underline">
+        <h2>Login</h2>
+        <form method="post" autocomplete="off">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    <script>
+        // Add a little interactive shake on failed login (if error message is present)
+        window.addEventListener('DOMContentLoaded', function() {
+            var box = document.querySelector('.box');
+            var error = document.querySelector('.errorlist');
+            if (error && box) {
+                box.animate([
+                    { transform: 'translateX(0)' },
+                    { transform: 'translateX(-10px)' },
+                    { transform: 'translateX(10px)' },
+                    { transform: 'translateX(-8px)' },
+                    { transform: 'translateX(8px)' },
+                    { transform: 'translateX(0)' }
+                ], {
+                    duration: 400,
+                    easing: 'ease-in-out'
+                });
+            }
+        });
+    </script>
 </body>
 </html>

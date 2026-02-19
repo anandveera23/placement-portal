@@ -13,9 +13,6 @@ path('performance/', views.performance, name='performance'),
 path('leaderboard/', views.leaderboard, name='leaderboard'),
  path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
  path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
-
-
-
-
+ path("all-results/", views.all_results, name="all_results"),
 
 ]

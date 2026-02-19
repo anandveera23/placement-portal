@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coding Result</title>
+    <style>
+        body {
+            background: linear-gradient(120deg,#1e3c72,#2a5298);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+            font-family:Segoe UI;
+            margin:0;
+        }
+        .card {
+            background:white;
+            padding:40px;
+            border-radius:20px;
+            text-align:center;
+            width:420px;
+            box-shadow:0 15px 30px rgba(0,0,0,0.3);
+        }
+        h2 { color:#1e3c72; }
+        .score {
+            font-size:48px;
+            color:#22c55e;
+            margin:20px 0;
+        }
+        p { color:#555; }
+        a {
+            display:inline-block;
+            margin-top:25px;
+            padding:12px 30px;
+            background:#2a5298;
+            color:white;
+            text-decoration:none;
+            border-radius:25px;
+            font-weight:600;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>🏁 Coding Test Completed</h2>
+    <div class="score">{{ score }} / {{ total }}</div>
+    <p>You have completed the coding test.</p>
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+</div>
+
+</body>
+</html>

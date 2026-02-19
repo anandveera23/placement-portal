@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coding Test</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(120deg, #0f172a 60%, #1e293b 100%);
+            color: #e5e7eb;
+            font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+            min-height: 100vh;
+        }
+
+        .top {
+            background: linear-gradient(90deg, #1e3c72 60%, #2a5298 100%);
+            padding: 18px 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 12px 0 #0002;
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+        }
+        .top h3 {
+            margin: 0;
+            font-size: 1.6rem;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        .top strong {
+            background: #334155;
+            padding: 7px 18px;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 0px;
+            height: calc(100vh - 70px);
+            box-shadow: 0 8px 32px 0 #0003;
+            border-radius: 18px;
+            margin: 30px auto 0 auto;
+            max-width: 1200px;
+            background: rgba(2,6,23,0.98);
+            overflow: hidden;
+        }
+
+        .left {
+            padding: 36px 32px 32px 36px;
+            background: linear-gradient(120deg, #1e293b 80%, #334155 100%);
+            border-right: 1.5px solid #334155;
+            box-shadow: 2px 0 12px 0 #0001;
+        }
+        .right {
+            padding: 36px 36px 32px 32px;
+            background: #020617;
+        }
+
+        .left h4 {
+            margin-top: 0;
+            color: #38bdf8;
+            font-size: 1.15rem;
+            margin-bottom: 6px;
+        }
+        .left p {
+            margin-top: 0;
+            margin-bottom: 18px;
+            color: #efe0ee;
+            font-size: 1.05rem;
+        }
+
+        textarea {
+            width: 100%;
+            height: 220px;
+            background: #0f172a;
+            color: #e5e7eb;
+            border: 1.5px solid #334155;
+            border-radius: 10px;
+            font-family: 'Fira Mono', 'Consolas', monospace;
+            font-size: 16px;
+            padding: 14px;
+            outline: none;
+            transition: border 0.2s;
+            box-shadow: 0 2px 8px 0 #0002;
+            resize: vertical;
+        }
+        textarea:focus {
+            border: 1.5px solid #38bdf8;
+            background: #1e293b;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            margin-top: 18px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 22px;
+            font-weight: bold;
+            font-size: 1.08rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px 0 #0002;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .btn:active {
+            transform: scale(0.97);
+        }
+        .run {
+            background: linear-gradient(90deg, #22c55e 70%, #16a34a 100%);
+            color: #0f172a;
+        }
+        .run:hover {
+            background: linear-gradient(90deg, #16a34a 70%, #22c55e 100%);
+        }
+        .submit {
+            background: linear-gradient(90deg, #3b82f6 70%, #2563eb 100%);
+            color: #fff;
+        }
+        .submit:hover {
+            background: linear-gradient(90deg, #2563eb 70%, #3b82f6 100%);
+        }
+
+        .output-box {
+            margin-top: 22px;
+            background: #18181b;
+            padding: 18px 16px 12px 16px;
+            border-radius: 12px;
+            min-height: 90px;
+            box-shadow: 0 2px 12px 0 #0002;
+            font-size: 1.05rem;
+            border: 1.5px solid #334155;
+            transition: border 0.2s;
+        }
+        .output-box:focus-within {
+            border: 1.5px solid #38bdf8;
+        }
+
+        .pass {
+            color: #22c55e;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+            animation: pop 0.4s;
+        }
+        .fail {
+            color: #ef4444;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+            animation: shake 0.4s;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.7); opacity: 0.2; }
+            80% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-6px); }
+            40% { transform: translateX(6px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
+            100% { transform: translateX(0); }
+        }
+
+        @media (max-width: 900px) {
+            .layout {
+                grid-template-columns: 1fr;
+                max-width: 98vw;
+                margin: 18px auto 0 auto;
+                border-radius: 12px;
+            }
+            .left, .right {
+                padding: 22px 10px 18px 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="top">
+    <h3>💻 Coding Test</h3>
+    <strong>Question {{ current }} / {{ total }}</strong>
+</div>
+
+<div class="layout">
+
+    <!-- LEFT -->
+    <div class="left">
+        <h4>📘 Problem</h4>
+        <p>{{ question.problem_statement }}</p>
+
+        <h4>📥 Input</h4>
+        <p>{{ question.input_format }}</p>
+
+        <h4>📤 Output</h4>
+        <p>{{ question.output_format }}</p>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right">
+
+        <textarea id="code" placeholder="# Write your Python code here..."></textarea>
+
+        <button class="btn run" onclick="runCode()">▶ Run Code</button>
+
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="is_correct" id="is_correct" value="false">
+            <button class="btn submit" type="submit">Submit & Next ▶</button>
+        </form>
+
+        <div class="output-box">
+            <div id="status"></div>
+            <pre id="output">Run code to see output...</pre>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+function runCode() {
+    document.getElementById("status").innerHTML = "";
+    document.getElementById("output").innerText = "Running...";
+
+    fetch("", {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": "{{ csrf_token }}",
+            "X-Requested-With": "XMLHttpRequest"
+        },
+        body: new URLSearchParams({
+            code: document.getElementById("code").value
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("output").innerText = data.output;
+
+        if (data.correct) {
+            document.getElementById("status").innerHTML =
+                "<div class='pass'>✔ Correct Answer</div>";
+            document.getElementById("is_correct").value = "true";
+        } else {
+            document.getElementById("status").innerHTML =
+                "<div class='fail'>✘ Wrong Answer</div>";
+            document.getElementById("is_correct").value = "false";
+        }
+    })
+    .catch(() => {
+        document.getElementById("status").innerHTML =
+            "<div class='fail'>⚠ Server Error</div>";
+        document.getElementById("output").innerText = "";
+    });
+}
+</script>
+
+</body>
+</html>

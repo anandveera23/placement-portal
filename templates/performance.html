@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Performance</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            width: 85%;
+            max-width: 900px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+
+        .card {
+            flex: 1;
+            margin: 10px;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .total { background: #4CAF50; }
+        .highest { background: #2196F3; }
+        .average { background: #FF9800; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th {
+            background: #764ba2;
+            color: white;
+            padding: 12px;
+        }
+
+        td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+
+        tr:hover {
+            background: #ddd;
+            transition: 0.3s;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #764ba2;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #5a3d85;
+        }
+
+        .no-data {
+            text-align: center;
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>📊 Your Performance</h2>
+
+    <div class="stats">
+        <div class="card total">
+            Total Tests <br><br>
+            {{ total_tests }}
+        </div>
+
+        <div class="card highest">
+            Highest Score <br><br>
+            {{ highest_score }}
+        </div>
+
+        <div class="card average">
+            Average Score <br><br>
+            {{ average_score }}
+        </div>
+    </div>
+
+    <h3>📅 Test History</h3>
+
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Score</th>
+            <th>Total</th>
+        </tr>
+
+        {% for r in results %}
+        <tr>
+            <td>{{ r.date_taken }}</td>
+            <td>{{ r.score }}</td>
+            <td>{{ r.total }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3" class="no-data">No tests taken yet.</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div style="text-align:center;">
+        <a href="{% url 'dashboard' %}" class="btn">⬅ Back to Dashboard</a>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaderboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(120deg, #1e3c72, #2a5298);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            width: 90%;
+            max-width: 900px;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            text-align: center;
+            color: #1e3c72;
+            margin-bottom: 25px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: center;
+        }
+
+        th {
+            background: #2a5298;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f2f5ff;
+        }
+
+        tr:hover {
+            background: #e8ecff;
+        }
+
+        .rank {
+            font-weight: bold;
+            color: #1e3c72;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 26px;
+            background: linear-gradient(120deg, #1e3c72, #2a5298);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>🏆 Leaderboard</h2>
+
+    <table>
+        <tr>
+            <th>Rank</th>
+            <th>User</th>
+            <th>Total Tests</th>
+            <th>Best Score</th>
+            <th>Average Score</th>
+        </tr>
+
+        {% for row in leaderboard %}
+        <tr>
+            <td class="rank">{{ forloop.counter }}</td>
+            <td>{{ row.user__username }}</td>
+            <td>{{ row.total_tests }}</td>
+            <td>{{ row.best_score }}</td>
+            <td>{{ row.avg_score|floatformat:2 }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No data available</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="center">
+        <a href="{% url 'dashboard' %}" class="btn">⬅ Back to Dashboard</a>
+    </div>
+
+</div>
+
+</body>
+</html>

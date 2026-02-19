@@ -15,8 +15,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-^_#8u03wbafebmgmdgcof=y$!4hzd4!@d1a-437=u1ni3moxqa'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-ALLOWED_HOSTS = ['*']
+DEBUG = False
+ALLOWED_HOSTS = ['placement-portal-fad8.onrender.com']
 
 
 #ALLOWED_HOSTS = ['placement-portal-fad8.onrender.com']
